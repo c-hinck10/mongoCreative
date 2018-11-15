@@ -1,41 +1,43 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Comment = mongoose.model('Comment');
+var Sneaker = mongoose.model('Sneaker');
 
-router.get('/comments', function(req, res, next) {
-  Comment.find(function(err, comments){
+router.get('/sneakers', function(req, res, next) {
+  Sneaker.find(function(err, sneakers){
     if(err){ return next(err); }
-    res.json(comments);
+    res.json(sneakers);
   });
 });
 
-router.post('/comments', function(req, res, next) {
-  var comment = new Comment(req.body);
-  comment.save(function(err, comment){
+router.post('/sneakers', function(req, res, next) {
+  var sneaker = new Sneaker(req.body);
+  sneaker.save(function(err, sneaker){
     if(err){ return next(err); }
-    res.json(comment);
+    res.json(sneaker);
   });
 });
 
-router.param('comment', function(req, res, next, id) {
-  var query = Comment.findById(id);
-  query.exec(function (err, comment){
+router.param('sneaker', function(req, res, next, id) {
+  var query = Sneaker.findById(id);
+  query.exec(function (err, sneaker){
     if (err) { return next(err); }
-    if (!comment) { return next(new Error("can't find comment")); }
-    req.comment = comment;
+    if (!sneaker) { return next(new Error("can't find sneaker")); }
+    req.sneaker = sneaker;
     return next();
   });
 });
 
-router.get('/comments/:comment', function(req, res) {
-  res.json(req.comment);
+router.get('/sneakers/:sneaker', function(req, res) {
+  res.json(req.sneaker);
 });
 
-router.put('/comments/:comment/upvote', function(req, res, next) {
-  req.comment.upvote(function(err, comment){
+router.put('/sneakers/:sneaker/upvote', function(req, res, next) {
+  req.sneaker.upvote(function(err, sneaker){
     if (err) { return next(err); }
-    res.json(comment);
+    res.json(sneaker);
   });
 });
+
+
 module.exports = router;

@@ -1,30 +1,44 @@
 <html>
+
 <head>
-  <title>Comments</title>
+  <title>Sneaker Rack</title>
+  <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">-->
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
   <script src="javascripts/app.js"></script>
+  <link rel="stylesheet" href="stylesheets/style.css">
 
 </head>
-<body ng-app="comment" ng-controller="MainCtrl">
-<div class="row">
-<div class="col-md-6 col-md-offset-3">
-<div class="page-header"> 
-  <h1>Comments </h1>
-</div>
 
-  <form ng-submit="addComment()" style = "margin-top30px;">
-    <input type="text" ng-model="formContent"></input>
-    <button type="submit">Add Comment</button>
-  </form>
-  <div>
-    {{test}}
+<body ng-app="sneaker" ng-controller="MainCtrl">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="page-header">
+        <h1>Share & Vote On Your Favorite Sneakers</h1>
+      </div>
+
+      <form style="margin-top: 30px;">
+        Shoe Name: <input id="shoeName" type="text" ng-model="shoeName"></input><br> Image: <input id="url" type="text" ng-model="avatarURL"></input><br>
+        <button ng-click="addSneaker()">Add Sneaker</button>
+        <button ng-click="getAll()">Get All</button>
+      </form>
+      
+      
+
+      <div id="sneakers" ng-repeat="sneaker in sneakers | orderBy: '-upvotes'" class='list center stretch'>
+        <div class="vote">
+         <img src="stylesheets/up-arrow.png" ng-click="incrementUpvotes(sneaker)"/>
+         <h1>{{sneaker.upvotes}}</h1>
+         <img src="stylesheets/down-arrow.png" ng-click="decrementUpvotes(sneaker)"/>
+        </div>
+        <div style="text-align: center; margin-bottom: 40px">
+        <img class='avatar' ng-src="{{sneaker.url}}" />
+        <h1>{{sneaker.name}}</h1>
+        </div>
+      </div>
+    </div>
   </div>
-  <div ng-repeat="comment in comments | orderBy: '-upvotes'">
-    <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(comment)"></span>
-    {{comment.title}} - upvotes: {{comment.upvotes}}
-  </div>
-</div>
-</div>
 </body>
+
 </html>
+
