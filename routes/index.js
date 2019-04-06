@@ -39,5 +39,18 @@ router.put('/sneakers/:sneaker/upvote', function(req, res, next) {
   });
 });
 
+router.put('/sneakers/:sneaker/downvote', function(req, res, next) {
+  req.sneaker.downvote(function(err, sneaker){
+    if (err) { return next(err); }
+    res.json(sneaker);
+  });
+});
+
+router.delete('/sneakers/:sneaker', function(req, res) {
+  console.log("in delete");
+  req.sneaker.remove();
+  res.sendStatus(200);
+});
+
 
 module.exports = router;

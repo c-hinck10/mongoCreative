@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
 var SneakerSchema = new mongoose.Schema({
-  name: {type: String, default: "No Name Provided"},
-  url: {type: String, default: "/stylesheets/No-image-found.jpg"},
-  upvotes: {type: Number, default: 0},
+  name: {type: String, default: "No Shoe Name"},
+  url: {type: String, default: "./No-image-found.jpg"},
+  upvotes: {type: Number}
 });
+
 SneakerSchema.methods.upvote = function(cb) {
   this.upvotes += 1;
   this.save(cb);
